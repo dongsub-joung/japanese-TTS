@@ -15,6 +15,7 @@ use std::fs::File;
 use std::io::Write;
 
 pub mod GetClipBoardInfo{
+
     pub fn init() -> String{
         let mut result_text;
     
@@ -25,10 +26,8 @@ pub mod GetClipBoardInfo{
                 if !h_clipboard_data.is_null() {
                     let text_ptr = GlobalLock(h_clipboard_data) as *mut i8;
                     if !text_ptr.is_null() {
-                        let text = CString::from_raw(text_ptr).into_string().unwrap();
-                        
-                        // println!("Clipboard Data: {}", text);
-                        result_text= text;
+                        result_text = CString::from_raw(text_ptr).into_string().unwrap();
+        
                         GlobalUnlock(h_clipboard_data);
                     } else {
                         println!("Failed to access clipboard data.");
@@ -41,7 +40,7 @@ pub mod GetClipBoardInfo{
                 println!("Failed to open clipboard. Error code: {}", GetLastError());
             }
         }
-    
+
         result_text
     }
 }
