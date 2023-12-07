@@ -1,10 +1,10 @@
 mod Windows;
-mod VoicevoxRequest;
-mod VoicevoxResponse;
+mod VoicevoxRequestJson;
+mod VoicevoxRequestAudio;
 
 fn main() {
     let text= Windows::GetClipBoardInfo::init();
-
-    VoicevoxRequest::SaveJSON::init();
-    // VoicevoxResponse::SendAudio::init()
+    Windows::SaveTxtFile::init(text);
+    VoicevoxRequestJson::SaveJSON::init();
+    VoicevoxRequestAudio::SendAudio::init();
 }
