@@ -1,14 +1,15 @@
 mod Windows;
-mod VoicevoxRequestJson;
-mod VoicevoxRequestAudio;
+mod File;
+mod VoicevoxRequest;
 
 fn main() {
     let text= Windows::GetClipBoardInfo::init();
-    Windows::SaveTxtFile::init(text);
     
-    let json= VoicevoxRequestJson::SaveJSON::init();;
+    File::SaveTxtFile::init(text);
+    
+    let json= VoicevoxRequest::Save::jsonTnit();;
     if json == Ok(()){
-        let audio= VoicevoxRequestAudio::SendAudio::init();
+        let audio= VoicevoxRequest::Save::audioInit();
         if audio == Ok(()) {
             println!("zundamon!")
         }else{
