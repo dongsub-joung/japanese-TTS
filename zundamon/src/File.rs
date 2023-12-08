@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::Write;
 
 pub mod SaveTxtFile{
-    pub fn init(text_content: String){
+    pub fn init(text_content: String) -> Result<(), Box<dyn std::error::Error>>{
   
     // Open or create a file (in this case named "output.txt")
     let mut file = File::create("text.txt")?;
