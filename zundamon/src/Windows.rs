@@ -1,15 +1,4 @@
-extern crate winapi;
-
-use std::ptr;
-use std::ffi::CString;
-use std::os::windows::ffi::OsStrExt;
-use std::iter::once;
-use winapi::um::winuser::{OpenClipboard, GetClipboardData, CloseClipboard, CF_TEXT};
-use winapi::um::handleapi::GlobalLock;
-use winapi::um::memoryapi::GlobalUnlock;
-use winapi::um::errhandlingapi::GetLastError;
-use winapi::shared::winerror::ERROR_SUCCESS;
-use winapi::shared::minwindef::{HGLOBAL, LPVOID};
+use clipboard_win::{Clipboard, formats, Getter, Setter};
 
 use std::fs::File;
 use std::io::Write;
@@ -17,31 +6,16 @@ use std::io::Write;
 pub mod GetClipBoardInfo{
 
     pub fn init() -> String{
-        let mut result_text;
-    
-        unsafe {
-            if OpenClipboard(ptr::null_mut()) != 0 {
-                let h_clipboard_data = GetClipboardData(CF_TEXT);
-    
-                if !h_clipboard_data.is_null() {
-                    let text_ptr = GlobalLock(h_clipboard_data) as *mut i8;
-                    if !text_ptr.is_null() {
-                        result_text = CString::from_raw(text_ptr).into_string().unwrap();
-        
-                        GlobalUnlock(h_clipboard_data);
-                    } else {
-                        println!("Failed to access clipboard data.");
-                    }
-                } else {
-                    println!("No text data in clipboard.");
-                }
-                CloseClipboard();
-            } else {
-                println!("Failed to open clipboard. Error code: {}", GetLastError());
-            }
-        }
+        let _clip = Clipboard::new_attempts(10).expect("Open clipboard");
+        formats::Unicode.write_clipboard(&SAMPLE).expect("Write sample");
 
-        result_text
+        let mut output = String::new();
+
+        let clip_text= formats::Unicode.read_clipboard(&mut output).expect("Read sample");
+   
+        // output.clear();
+        
+        clip_text
     }
 }
 
