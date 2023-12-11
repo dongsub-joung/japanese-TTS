@@ -7,4 +7,4 @@ edition = "2021"
 
 [dependencies]
 clipboard-win = "5.0.0"
-reqwest = "0.11.22"
+reqwest = {version="0.11.22", features=["blocking"]}
