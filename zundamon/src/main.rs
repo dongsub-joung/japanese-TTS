@@ -2,12 +2,6 @@ mod windows;
 mod voicevox_request;
 mod fileing;
 
-use std::fs::File;
-use std::io::Read;
-
-use reqwest::Error;
-
-
 fn main() -> Result<(), Error>{
     let text= windows::ClipBoard::get_it();
     
