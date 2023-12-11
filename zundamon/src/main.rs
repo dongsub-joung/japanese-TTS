@@ -11,13 +11,14 @@ use reqwest::Error;
 fn main() -> Result<(), Error>{
     let text= Windows::ClipBoard::get_it();
     
-    let _= Fileing::SaveTxtFile::init(text);
+    let do_file= Fileing::SaveTxtFile::init(text);
     
-    let file = std::fs::File::open("text.txt");
-    let mut text = String::new();
-    let _= file.unwrap().read_to_string(&mut text);
-
-    let _= VoicevoxRequest::Save::init(text);
+    if do_file.is_ok(){
+        let do_request= VoicevoxRequest::Save::json_init();
+        if do_request.is_ok() {
+            VoicevoxRequest::Save::json_init();
+        }
+    }
 
     Ok(())
 }

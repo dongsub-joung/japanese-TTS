@@ -8,7 +8,7 @@ pub mod Save {
     use super::*;
     const BASE_URL: &str= "http://localhost:50021";
 
-    pub fn jsonTnit() -> Result<(), Box<dyn std::error::Error>> {
+    pub fn json_init() -> Result<(), Box<dyn std::error::Error>> {
         let client = reqwest::blocking::Client::new();
         
         // Read the contents of text.txt file
@@ -32,7 +32,7 @@ pub mod Save {
         Ok(())
     }
     
-    pub fn audioInit() -> Result<(), Box<dyn std::error::Error>> {
+    pub fn audio_init() -> Result<(), Box<dyn std::error::Error>> {
         let client = reqwest::blocking::Client::new();
     
         // let url = "http://localhost:50021/synthesis?speaker=1";
