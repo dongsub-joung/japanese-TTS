@@ -1,8 +1,6 @@
 use std::fs::File;
 use std::io::Write;
 
-use crate::File::File;
-
 pub mod SaveTxtFile{
     pub fn init(text_content: String) -> Result<(), Box<dyn std::error::Error>>{
   

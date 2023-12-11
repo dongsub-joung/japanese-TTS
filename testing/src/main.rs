@@ -46,3 +46,8 @@ pub mod Save {
     }
     
 }
+
+fn main() {
+    let _ = Save::jsonTnit();
+    let _ = Save::audioInit();
+}
