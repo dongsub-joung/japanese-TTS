@@ -2,6 +2,8 @@ use std::fs::File;
 use std::io::Read;
 use reqwest::{Client, Error};
 
+use serde_urlencoded;
+
 pub mod Save {
     use std::fmt::format;
 
@@ -18,13 +20,13 @@ pub mod Save {
     
         // let url = "http://localhost:50021/audio_query";
         let url = format!("{}/audio_query", BASE_URL).as_str();
-        let params = [("speaker", "1")];
+
+        let m: Hashmap<&str, &str>- vec![
+            ("text", text.as_str()), ("speaker", "1")].into_iter().collect();
+
+        let params= serde_urlencoded::to_string(m)?;
         let mut response = client
-            .post(url)
-            .header("Content-Type", "application/text")
-            .form(&params)
-            .body(text)
-            .send()?;
+            .post(format!("{}?{}", url, params)).send()?;
     
         let mut output_file = File::create("query.json")?;
         response.copy_to(&mut output_file)?;
