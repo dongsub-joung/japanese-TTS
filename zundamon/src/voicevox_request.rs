@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::Read;
 use reqwest::{Client, Error};
-
+use std::collections::HashMap;
 use serde_urlencoded;
 
 pub mod Save {
@@ -18,10 +18,9 @@ pub mod Save {
         let mut text = String::new();
         file.read_to_string(&mut text)?;
     
-        // let url = "http://localhost:50021/audio_query";
-        let url = format!("{}/audio_query", BASE_URL).as_str();
+        let url = "http://localhost:50021/audio_query";
 
-        let m: Hashmap<&str, &str>- vec![
+        let m: HashMap<&str, &str>= vec![
             ("text", text.as_str()), ("speaker", "1")].into_iter().collect();
 
         let params= serde_urlencoded::to_string(m)?;
@@ -37,8 +36,7 @@ pub mod Save {
     pub fn audio_init() -> Result<(), Box<dyn std::error::Error>> {
         let client = reqwest::blocking::Client::new();
     
-        // let url = "http://localhost:50021/synthesis?speaker=1";
-        let url = format!("{}/synthesis?speaker=1", BASE_URL).as_str();
+        let url = "http://localhost:50021/synthesis?speaker=1";
         let mut file = File::open("query.json")?;
         let mut json_content = String::new();
         file.read_to_string(&mut json_content)?;
