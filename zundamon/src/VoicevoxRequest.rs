@@ -1,6 +1,6 @@
 use std::fs::File;
 use std::io::Read;
-use reqwest;
+use reqwest::{Client, Error};
 
 pub mod Save {
     use super::*;
@@ -15,7 +15,9 @@ pub mod Save {
     
         let url = "http://localhost:50021/audio_query";
         let params = [("speaker", "1")];
-        let mut response = client.post(url)
+        let mut response = client
+            .post(url)
+            .header("Content-Type", "application/text")
             .form(&params)
             .body(text)
             .send()?;

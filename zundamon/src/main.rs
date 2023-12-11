@@ -2,7 +2,8 @@ mod Windows;
 mod File;
 mod VoicevoxRequest;
 
-fn main() {
+#[tokio::main]
+async fn main() -> Result<(), Error> {
     let text= Windows::ClipBoard::get_it();
     
     File::SaveTxtFile::init(text);
@@ -18,4 +19,6 @@ fn main() {
     }else{
         println!("Faild making a JSON");
     }
+
+    Ok(())
 }
