@@ -11,28 +11,25 @@ pub mod save {
     const BASE: &str= "http://localhost:50021";
     const SPEAKER: &str= "1";
 
-    fn open_then_read()-> Result<(), Box<dyn std::error::Error>> {
+    fn open_then_read(file_name: &str)-> Result<String, Box<dyn std::error::Error>> {
         let mut text = String::new();
         
-        let mut file = std::fs::File::open("text.txt")?;
+        let mut file = std::fs::File::open(file_name)?;
         file.read_to_string(&mut text)
             .expect("{can't read a text file}");
 
-        Ok(())
-    }
-
-    fn set_hashmap_value() -> HashMap<&str, &str>{
-        vec![("text", text.as_str()), ("speaker", "1")].into_iter().collect()
+        Ok(text)
     }
 
     pub fn json_init() -> Result<(), Box<dyn std::error::Error>> {
         let client = reqwest::blocking::Client::new();
         
-        open_then_read();
-    
+        let body= open_then_read("text.txt").unwrap();
+
         // let url = "http://localhost:50021/audio_query";
         let url= format!("{}/audio_query", BASE);
-        let m: HashMap<&str, &str>= set_hashmap_value();
+        let m: HashMap<&str, &str>= 
+            vec![("text", body.as_str()), ("speaker", "1")].into_iter().collect();
         let params= serde_urlencoded::to_string(m)?;
         
         let mut response = client
@@ -50,9 +47,7 @@ pub mod save {
         // let url = "http://localhost:50021/synthesis?speaker=1";
         let url= format!("{}/synthesis?speaker={}", BASE, SPEAKER);
 
-        let mut file = File::open("query.json")?;
-        let mut json_content = String::new();
-        file.read_to_string(&mut json_content)?;
+        let json_content= open_then_read("query.json").unwrap();
     
         let mut response = client.post(url)
             .header(CONTENT_TYPE, "application/json")
