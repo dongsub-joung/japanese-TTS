@@ -17,13 +17,7 @@ Pop up the voicevox.exe as windows administrator mode
 > CORS Policy Mode -all
 
 http://localhost:50021/setting
-
-
-```
-input your path
-const PATH: &str= "C:/Users/kiririn/git/japanese-TTS/zundamon/audio.wav";
-```    
-
+   
 ## Usage
 ```
 cd zundamon
