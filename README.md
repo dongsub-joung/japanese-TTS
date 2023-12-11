@@ -18,7 +18,6 @@ Pop up the voicevox.exe as windows administrator mode
 
 http://localhost:50021/setting
 
-3. Change PAHT valuable `main.rs`  
 
 ```
 input your path
