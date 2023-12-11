@@ -1,11 +1,8 @@
 use std::fs::File;
 use std::io::Read;
+use reqwest;
 
-// import err
-use reqwest::blocking::Client;
-use reqwest::Client;
-
-use crate::VoicevoxRequest::File;
+use crate::reqwest::blocking::Client;
 
 pub mod Save {
     pub fn jsonTnit() -> Result<(), Box<dyn std::error::Error>> {
