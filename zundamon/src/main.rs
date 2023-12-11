@@ -10,7 +10,7 @@ use std::time::Duration;
 use soloud::*;
 
 fn init() ->  Result<(), Box<dyn std::error::Error>> {
-    let text= windows::clipBoard::get_it();
+    let text= windows::clip_board::get_it();
     
     let do_file= fileing::save_txtfile::init(text);
     
@@ -28,16 +28,19 @@ fn init() ->  Result<(), Box<dyn std::error::Error>> {
 fn play_audio(pwd: &str){
     let sl = Soloud::default().unwrap();
     let mut wav = audio::Wav::default();
-    // wav.load_mem(include_bytes!("C:/Users/kiririn/git/japanese-TTS/zundamon/audio.wav")).unwrap();
-    wav.load(pwd);
-    sl.play(&wav);
+    let load_work= wav.load(pwd);
+    if load_work.is_ok(){
+        sl.play(&wav);
+    }else{
+        println!("Sound load is not work");
+    }
     while sl.voice_count() > 0 {
         std::thread::sleep(std::time::Duration::from_millis(100));
     }
 }
 
 fn main() {
-    const path: &str= "C:/Users/kiririn/git/japanese-TTS/zundamon/audio.wav";
+    const PATH: &str= "C:/Users/kiririn/git/japanese-TTS/zundamon/audio.wav";
     
     // A flag to indicate when to stop the loop
     let running = Arc::new(AtomicBool::new(true));
@@ -55,11 +58,10 @@ fn main() {
         // Your code here - This loop will keep running until Ctrl+C is pressed
         println!("Running...");
 
-        let string= windows::clipBoard::get_it();
         thread::sleep(Duration::from_secs(5));
 
         let _= init();
-        play_audio(path);
+        play_audio(PATH);
 
         // Simulating some work
         thread::sleep(Duration::from_secs(10));
