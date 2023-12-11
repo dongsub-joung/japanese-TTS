@@ -3,14 +3,13 @@ use std::io::Write;
 
 pub mod save_txtfile{
     use super::*;
-    
-    pub fn init(text_content: String) -> Result<(), Box<dyn std::error::Error>>{
-  
-    // Open or create a file (in this case named "output.txt")
-    let mut file = File::create("text.txt")?;
+    const FILE_NAME: &str= "text.txt";
 
-    // Write the text content to the file
-    file.write_all(text_content.as_bytes())?;
+    pub fn init(text_content: String) -> Result<(), Box<dyn std::error::Error>>{
+    
+    let mut file = File::create(FILE_NAME)?;
+
+    file.write_all(text_content.as_bytes()).expect("text file io err");
 
     println!("Text saved to 'output.txt' file.");
 
