@@ -1,50 +1,24 @@
-use std::fs::File;
-use std::io::Read;
-use reqwest::{Client, Error};
+use voicevox_client::Client;
+use reqwest::Result;
+use std::{io::Write, fs::File};
 
 pub mod Save {
     use super::*;
 
-    pub fn jsonTnit() -> Result<(), Box<dyn std::error::Error>> {
-        let client = reqwest::blocking::Client::new();
-    
-        // Read the contents of text.txt file
-        let mut file = std::fs::File::open("text.txt")?;
-        let mut text = String::new();
-        file.read_to_string(&mut text)?;
-    
-        let url = "http://localhost:50021/audio_query";
-        let params = [("speaker", "1")];
-        let mut response = client
-            .post(url)
-            .header("Content-Type", "application/text")
-            .form(&params)
-            .body(text)
-            .send()?;
-    
-        let mut output_file = File::create("query.json")?;
-        response.copy_to(&mut output_file)?;
-    
+    pub async fn init(txt: String) -> Result<()> {
+        let client = Client::new("http://localhost:50021".to_string());
+        let audio_query = client
+            .create_audio_query(txt.as_str(), 1, None)
+            .await?;
+        let mut audio = audio_query.synthesis(1).await?;
+        
+        // let mut file = File::create("./audio.wav").unwrap();
+        // let mut file = File::create("C:/Users/kiririn/git/japanese-TTS/zundamon/audio.wav").unwrap();
+        // file.write_all(&audio).unwrap();
+        
+        let output_file = File::create("audio.wav");
+        let _= output_file.unwrap().write_all(&mut audio);
+
         Ok(())
     }
-    
-    pub fn audioInit() -> Result<(), Box<dyn std::error::Error>> {
-        let client = reqwest::blocking::Client::new();
-    
-        let url = "http://localhost:50021/synthesis?speaker=1";
-        let mut file = File::open("query.json")?;
-        let mut json_content = String::new();
-        file.read_to_string(&mut json_content)?;
-    
-        let mut response = client.post(url)
-            .header("Content-Type", "application/json")
-            .body(json_content)
-            .send()?;
-    
-        let mut output_file = File::create("audio.wav")?;
-        response.copy_to(&mut output_file)?;
-    
-        Ok(())
-    }
-    
 }

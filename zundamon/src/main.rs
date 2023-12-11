@@ -1,21 +1,23 @@
 mod Windows;
-mod File;
 mod VoicevoxRequest;
+mod Fileing;
 
-fn main(){
+use std::fs::File;
+use std::io::Read;
+
+use reqwest::Error;
+
+
+fn main() -> Result<(), Error>{
     let text= Windows::ClipBoard::get_it();
     
-    File::SaveTxtFile::init(text);
+    let _= Fileing::SaveTxtFile::init(text);
     
-    let json= VoicevoxRequest::Save::jsonTnit();
-    if json.is_ok(){
-        let audio= VoicevoxRequest::Save::audioInit();
-        if audio.is_ok(){
-            println!("zundamon!")
-        }else{
-            println!("Faild making a audio");
-        }
-    }else{
-        println!("Faild making a JSON");
-    }
+    let file = std::fs::File::open("text.txt");
+    let mut text = String::new();
+    let _= file.unwrap().read_to_string(&mut text);
+
+    let _= VoicevoxRequest::Save::init(text);
+
+    Ok(())
 }
