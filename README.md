@@ -3,7 +3,8 @@ in windows written rust
 play a sound using clipboard data
 
 ## dependency - installed  
-https://voicevox.hiroshiba.jp/
+https://voicevox.hiroshiba.jp/  
+https://cmake.org/download/
 
 ## setting  
 1. 
