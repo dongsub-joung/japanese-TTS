@@ -6,7 +6,6 @@ use reqwest::header::{CONTENT_TYPE, CONNECTION};
 
 pub mod save {
     use super::*;
-    use std::fmt::format;
 
     const BASE: &str= "http://localhost:50021";
     const SPEAKER: &str= "1";
