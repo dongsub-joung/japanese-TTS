@@ -1,10 +1,11 @@
 use std::fs::File;
 use std::io::Read;
-use reqwest::{Client, Error};
+// use reqwest::{Client, Error};
 use std::collections::HashMap;
 use serde_urlencoded;
+use reqwest::header::{CONTENT_TYPE, CONNECTION};
 
-pub mod Save {
+pub mod save {
     use std::fmt::format;
 
     use super::*;
@@ -42,7 +43,8 @@ pub mod Save {
         file.read_to_string(&mut json_content)?;
     
         let mut response = client.post(url)
-            .header("Content-Type", "application/json")
+            .header(CONTENT_TYPE, "application/json")
+            .header(CONNECTION, "close")
             .body(json_content)
             .send()?;
     
