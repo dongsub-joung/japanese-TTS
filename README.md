@@ -1,5 +1,6 @@
 # Japanese-TTS
-in windows written rust 
+in windows written rust  
+play a sound using clipboard data
 
 ## dependency - installed  
 https://voicevox.hiroshiba.jp/
