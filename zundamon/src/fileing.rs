@@ -1,7 +1,7 @@
 use std::fs::File;
 use std::io::Write;
 
-pub mod SaveTxtFile{
+pub mod save_txtfile{
     use super::*;
     
     pub fn init(text_content: String) -> Result<(), Box<dyn std::error::Error>>{
