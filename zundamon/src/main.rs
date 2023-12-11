@@ -7,7 +7,7 @@ fn main() {
     
     File::SaveTxtFile::init(text);
     
-    let json= VoicevoxRequest::Save::jsonTnit();;
+    let json= VoicevoxRequest::Save::jsonTnit();
     if json.is_ok(){
         let audio= VoicevoxRequest::Save::audioInit();
         if audio.is_ok(){
